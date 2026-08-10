@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#2b7fb0">
+<title>WSLR</title>
+<style>
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body {
+    margin: 0; padding: 0; height: 100%; width: 100%;
+    overflow: hidden;
+    background: #0f1c26;
+    font-family: -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: #fff;
+    -webkit-user-select: none; user-select: none;
+    -webkit-touch-callout: none;
+  }
+  .wrap {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 4vmin;
+  }
+  header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 2vmin;
+    padding: 0 1vmin 3vmin;
+    flex: 0 0 auto;
+  }
+  .brand {
+    font-size: clamp(20px, 4.2vmin, 40px);
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    color: #7fc4e8;
+  }
+  .clock {
+    text-align: right;
+    line-height: 1.1;
+  }
+  .clock .time {
+    font-size: clamp(24px, 5.2vmin, 52px);
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+  .clock .date {
+    font-size: clamp(12px, 2.2vmin, 20px);
+    color: #8aa3b2;
+    margin-top: 0.4em;
+  }
+  main {
+    flex: 1 1 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4vmin;
+    min-height: 0;
+  }
+  @media (max-aspect-ratio: 3/4) {
+    main { grid-template-columns: 1fr; grid-template-rows: 1fr 1fr; }
+  }
+  a.tile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2.5vmin;
+    border-radius: 4vmin;
+    text-decoration: none;
+    color: #fff;
+    background: linear-gradient(160deg, #2b7fb0 0%, #1b5a80 100%);
+    box-shadow: 0 1.2vmin 3vmin rgba(0,0,0,0.45);
+    transition: transform 0.12s ease, filter 0.12s ease;
+    padding: 4vmin;
+    text-align: center;
+  }
+  a.tile.kitchen {
+    background: linear-gradient(160deg, #2f9e6b 0%, #1d6b48 100%);
+  }
+  a.tile:active {
+    transform: scale(0.97);
+    filter: brightness(1.15);
+  }
+  .icon { font-size: clamp(48px, 14vmin, 150px); line-height: 1; }
+  .label {
+    font-size: clamp(22px, 5.4vmin, 60px);
+    font-weight: 800;
+    letter-spacing: 0.03em;
+  }
+  .sub {
+    font-size: clamp(13px, 2.4vmin, 24px);
+    opacity: 0.85;
+    font-weight: 500;
+  }
+  footer {
+    flex: 0 0 auto;
+    text-align: center;
+    padding-top: 2.5vmin;
+    font-size: clamp(11px, 1.9vmin, 16px);
+    color: #5a7386;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="brand">WSLR</div>
+    <div class="clock">
+      <div class="time" id="time">--:--</div>
+      <div class="date" id="date">&nbsp;</div>
+    </div>
+  </header>
+
+  <main>
+    <a class="tile bundy" href="https://gjoel.github.io/WSLR-Bundy-Kiosk/">
+      <div class="icon">&#128337;</div>
+      <div class="label">Bundy Clock</div>
+      <div class="sub">Clock in &amp; out</div>
+    </a>
+
+    <a class="tile kitchen" href="https://gjoel.github.io/wslr-kitchen/">
+      <div class="icon">&#127859;</div>
+      <div class="label">Kitchen</div>
+      <div class="sub">Deliveries &amp; stock</div>
+    </a>
+  </main>
+
+  <footer>Tap a tile to open. Use the Home button to come back here.</footer>
+
+</div>
+
+<script>
+  function tick() {
+    var now = new Date();
+    var h = now.getHours();
+    var m = now.getMinutes();
+    var ampm = h >= 12 ? 'pm' : 'am';
+    var h12 = h % 12; if (h12 === 0) h12 = 12;
+    document.getElementById('time').textContent =
+      h12 + ':' + (m < 10 ? '0' + m : m) + ' ' + ampm;
+
+    var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+    var months = ['January','February','March','April','May','June',
+                  'July','August','September','October','November','December'];
+    document.getElementById('date').textContent =
+      days[now.getDay()] + ', ' + now.getDate() + ' ' + months[now.getMonth()];
+  }
+  tick();
+  setInterval(tick, 10000);
+
+  // Block long-press context menu and pinch zoom on the tablet
+  document.addEventListener('contextmenu', function (e) { e.preventDefault(); });
+  document.addEventListener('gesturestart', function (e) { e.preventDefault(); });
+</script>
+</body>
+</html>
