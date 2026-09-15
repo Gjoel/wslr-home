@@ -50,46 +50,68 @@
     color: #8aa3b2;
     margin-top: 0.4em;
   }
+
+  /* Default: wide / landscape tablet — three tiles across */
   main {
     flex: 1 1 auto;
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4vmin;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 1fr;
+    gap: 3vmin;
     min-height: 0;
   }
-  @media (max-aspect-ratio: 3/4) {
-    main { grid-template-columns: 1fr; grid-template-rows: 1fr 1fr; }
+
+  /* Near-square screens — two across, planner spans the bottom */
+  @media (max-aspect-ratio: 1/1) {
+    main {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+    }
+    a.tile.planner { grid-column: 1 / -1; }
   }
+
+  /* Portrait screens — one tile per row */
+  @media (max-aspect-ratio: 3/4) {
+    main {
+      grid-template-columns: 1fr;
+      grid-template-rows: repeat(3, 1fr);
+    }
+    a.tile.planner { grid-column: auto; }
+  }
+
   a.tile {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 2.5vmin;
+    gap: 2vmin;
     border-radius: 4vmin;
     text-decoration: none;
     color: #fff;
     background: linear-gradient(160deg, #2b7fb0 0%, #1b5a80 100%);
     box-shadow: 0 1.2vmin 3vmin rgba(0,0,0,0.45);
     transition: transform 0.12s ease, filter 0.12s ease;
-    padding: 4vmin;
+    padding: 3vmin;
     text-align: center;
   }
   a.tile.kitchen {
     background: linear-gradient(160deg, #2f9e6b 0%, #1d6b48 100%);
   }
+  a.tile.planner {
+    background: linear-gradient(160deg, #d98b2b 0%, #9d5d15 100%);
+  }
   a.tile:active {
     transform: scale(0.97);
     filter: brightness(1.15);
   }
-  .icon { font-size: clamp(48px, 14vmin, 150px); line-height: 1; }
+  .icon { font-size: clamp(40px, 11vmin, 120px); line-height: 1; }
   .label {
-    font-size: clamp(22px, 5.4vmin, 60px);
+    font-size: clamp(20px, 4.4vmin, 48px);
     font-weight: 800;
     letter-spacing: 0.03em;
   }
   .sub {
-    font-size: clamp(13px, 2.4vmin, 24px);
+    font-size: clamp(12px, 2.1vmin, 22px);
     opacity: 0.85;
     font-weight: 500;
   }
@@ -124,6 +146,12 @@
       <div class="icon">&#127859;</div>
       <div class="label">Kitchen</div>
       <div class="sub">Deliveries &amp; stock</div>
+    </a>
+
+    <a class="tile planner" href="https://script.google.com/macros/s/AKfycbzZRTaW_EUgQ3cuCWsqcuPrtxZwYxGaWGFh5PBA2O4uBJilHYFMSRnG0I65BW2ImtiMaw/exec">
+      <div class="icon">&#128203;</div>
+      <div class="label">Meal Planner</div>
+      <div class="sub">Menus, rosters &amp; prep</div>
     </a>
   </main>
 
