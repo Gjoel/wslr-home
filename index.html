@@ -51,32 +51,30 @@
     margin-top: 0.4em;
   }
 
-  /* Default: wide / landscape tablet — three tiles across */
+  /* Default: four tiles in a two by two grid */
   main {
     flex: 1 1 auto;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: 1fr;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
     gap: 3vmin;
     min-height: 0;
   }
 
-  /* Near-square screens — two across, planner spans the bottom */
-  @media (max-aspect-ratio: 1/1) {
+  /* Very wide screens — all four across */
+  @media (min-aspect-ratio: 2/1) {
     main {
-      grid-template-columns: 1fr 1fr;
-      grid-template-rows: 1fr 1fr;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: 1fr;
     }
-    a.tile.planner { grid-column: 1 / -1; }
   }
 
-  /* Portrait screens — one tile per row */
-  @media (max-aspect-ratio: 3/4) {
+  /* Tall, narrow phones — one tile per row */
+  @media (max-aspect-ratio: 1/2) {
     main {
       grid-template-columns: 1fr;
-      grid-template-rows: repeat(3, 1fr);
+      grid-template-rows: repeat(4, 1fr);
     }
-    a.tile.planner { grid-column: auto; }
   }
 
   a.tile {
@@ -99,6 +97,9 @@
   }
   a.tile.planner {
     background: linear-gradient(160deg, #d98b2b 0%, #9d5d15 100%);
+  }
+  a.tile.shed {
+    background: linear-gradient(160deg, #8a5cd0 0%, #5a3596 100%);
   }
   a.tile:active {
     transform: scale(0.97);
@@ -152,6 +153,12 @@
       <div class="icon">&#128203;</div>
       <div class="label">Meal Planner</div>
       <div class="sub">Menus, rosters &amp; prep</div>
+    </a>
+
+    <a class="tile shed" href="https://gjoel.github.io/wslr-kitchen/shed.html">
+      <div class="icon">&#129529;</div>
+      <div class="label">Bike Shed</div>
+      <div class="sub">Cleaning &amp; room supplies</div>
     </a>
   </main>
 
